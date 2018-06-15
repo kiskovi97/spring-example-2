@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Person</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container" style="padding: 50px">
+    <a th:href="@{'/product'}" class="btn btn-default">Product</a>
+    <a th:href="@{'/person'}" class="btn btn-default">Person</a>
+    <a th:href="@{'/productorder'}" class="btn btn-default">ProductOrder</a>
+</div>
+<div id="productOrderTable" class="container">
+    <h1>ProductOrder</h1>
+
+    <form action="#" th:action="@{/productorder_add}" th:object="${productOrder}" method="post" class="container"
+          style="width: 500px">
+        <div class="form-group">
+            <label for="person">Person:</label>
+            <select id="person" th:field="*{person.id}" class="form-control">
+                <option th:each="person : ${persons}" th:text="${person.name}" th:value="${person.id}">
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="product">Product:</label>
+            <select id="product" th:field="*{product.id}" class="form-control">
+                <option th:each="product : ${products}" th:text="${product.name}" th:value="${product.id}">
+                </option>
+            </select>
+        </div>
+        <input type="submit" class="btn btn-succes" value="Submit"/>
+        <input type="reset" class="btn btn-default" value="Reset"/>
+    </form>
+
+    <table id="myTableId" class="table table-striped">
+        <thead>
+        <tr>
+            <th style="width: 50px">Id</th>
+            <th>Name</th>
+            <th>Country</th>
+        </tr>
+        </thead>
+        <tr th:each="productorder : ${productorders}">
+            <td th:text="${productorder.id}" style="width: 50px">1</td>
+            <td th:text="${productorder.person.name}">Doe</td>
+            <td th:text="${productorder.product.name}">John</td>
+            <td style="width: 50px">
+                <a th:href="@{'/delete_productorder/' + ${productorder.id}}" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
