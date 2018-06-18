@@ -8,15 +8,11 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-<div class="container" style="padding: 50px">
-    <a th:href="@{'/product'}" class="btn btn-default">Product</a>
-    <a th:href="@{'/person'}" class="btn btn-default">Person</a>
-    <a th:href="@{'/productorder'}" class="btn btn-default">ProductOrder</a>
-</div>
+<div th:insert="Header :: body">...</div>
 <div id="productOrderTable" class="container">
     <h1>ProductOrder</h1>
 
-    <form action="#" th:action="@{/productorder_add}" th:object="${productOrder}" method="post" class="container"
+    <form action="#" th:action="@{/productorders}" th:object="${productOrder}" method="post" class="container"
           style="width: 500px">
         <div class="form-group">
             <label for="person">Person:</label>
@@ -40,8 +36,9 @@
         <thead>
         <tr>
             <th style="width: 50px">Id</th>
-            <th>Name</th>
-            <th>Country</th>
+            <th>Person</th>
+            <th>Product</th>
+            <th></th>
         </tr>
         </thead>
         <tr th:each="productorder : ${productorders}">
@@ -49,7 +46,10 @@
             <td th:text="${productorder.person.name}">Doe</td>
             <td th:text="${productorder.product.name}">John</td>
             <td style="width: 50px">
-                <a th:href="@{'/delete_productorder/' + ${productorder.id}}" class="btn btn-danger">Delete</a>
+                <a th:href="@{'/productorders/' + ${productorder.id} + '/delete'}"
+                   class="btn btn-danger" onclick="confirm('Are you sure?')">
+                    Delete
+                </a>
             </td>
         </tr>
     </table>

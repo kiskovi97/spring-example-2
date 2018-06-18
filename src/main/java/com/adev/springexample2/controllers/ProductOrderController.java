@@ -27,8 +27,8 @@ public class ProductOrderController {
         this.personService = personService;
     }
 
-    @GetMapping({"/productorder"})
-    public String showProductOrderPage(Model model) {
+    @GetMapping({"/productorders"})
+    public String showProductOrders(Model model) {
         model.addAttribute( "persons", personService.findAllPerson());
         model.addAttribute( "products", productService.findAllProduct());
         model.addAttribute("productorders", productOrderService.findAllProductOrder());
@@ -36,27 +36,23 @@ public class ProductOrderController {
         productOrder.setProduct(new Product());
         productOrder.setPerson(new Person());
         model.addAttribute("productOrder", productOrder);
-        model.addAttribute("productInput", new Product());
-        model.addAttribute("personInput", new Person());
         return "ProductOrderPage";
     }
 
-    @PostMapping("/productorder_add")
-    public String addProductOrder(Model model,  @ModelAttribute ProductOrder productOrder) {
+    @PostMapping("/productorders")
+    public String addProductOrder(@ModelAttribute ProductOrder productOrder) {
         productOrderService.addProductOrder(productOrder);
-        return "redirect:/productorder";
+        return "redirect:/productorders";
     }
 
-    @RequestMapping(value = "/delete_productorder/{stringID}")
-    public String handleDeleteProductOrder(Model model, @PathVariable String stringID) {
-        long longID = Long.parseLong(stringID);
-        productOrderService.deleteProductOrder(longID);
-        return "redirect:/productorder";
+    @RequestMapping(value = "/productorders/{id}/delete")
+    public String deleteProductOrder(@PathVariable String id) {
+        productOrderService.deleteProductOrder(Long.parseLong(id));
+        return "redirect:/productorders";
     }
 
-
-    @RequestMapping("/productorderbyID/{id}")
-    public String showProductOrderbyID(Model model, @PathVariable Long id) {
+    @RequestMapping("/productorders/{id}")
+    public String showProductOrderById(Model model, @PathVariable Long id) {
         model.addAttribute("productorders", productOrderService.getProductOrderByID(id));
         return "ProductOrderPage";
     }

@@ -18,29 +18,28 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping({"/product"})
-    public String showProductPage(Model model) {
+    @GetMapping({"/products"})
+    public String showProducts(Model model) {
         model.addAttribute("products", productService.findAllProduct());
         model.addAttribute("product", new Product());
         return "ProductPage";
     }
 
-    @PostMapping("/product_add")
-    public String addProduct(Model model, @ModelAttribute Product product) {
+    @PostMapping("/products")
+    public String addProduct(@ModelAttribute Product product) {
         productService.addProduct(product);
-        return "redirect:/product";
+        return "redirect:/products";
     }
 
-    @RequestMapping(value = "/delete_product/{stringID}")
-    public String handleDeleteProduct(Model model, @PathVariable String stringID) {
+    @RequestMapping(value = "/products/{stringID}/delete")
+    public String deleteProduct(@PathVariable String stringID) {
         long longID = Long.parseLong(stringID);
         productService.deleteProduct(longID);
-        return "redirect:/product";
+        return "redirect:/products";
     }
 
-
-    @RequestMapping("/productbyID/{id}")
-    public String showProductbyID(Model model, @PathVariable Long id) {
+    @RequestMapping("/products/{id}")
+    public String showProductById(Model model, @PathVariable Long id) {
         model.addAttribute("products", productService.getProductByID(id));
         return "ProductPage";
     }

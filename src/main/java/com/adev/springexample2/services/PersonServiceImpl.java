@@ -38,7 +38,8 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public void deletePerson(Long id) {
         List<ProductOrder> productOrder = productOrderRepository.findAllByPersonID(id);
-        if (productOrder.isEmpty())
+        if (productOrder.isEmpty()) {
             personRepository.deleteById(id);
+        }
     }
 }

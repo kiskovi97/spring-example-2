@@ -8,20 +8,17 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-<div class="container" style="padding: 50px">
-    <a th:href="@{'/product'}" class="btn btn-default">Product</a>
-    <a th:href="@{'/person'}" class="btn btn-default">Person</a>
-    <a th:href="@{'/productorder'}" class="btn btn-default">ProductOrder</a>
-</div>
+<div th:insert="Header :: body">...</div>
 <div id="productTable" class="container">
     <h1>Product</h1>
-    <form action="#" th:action="@{/product_add}" th:object="${product}" method="post" class="container" style="width: 500px">
+    <form action="#" th:action="@{/products}" th:object="${product}" method="post" class="container"
+          style="width: 500px">
         <div class="form-group">
             <label for="name">Name:</label>
             <input id="name" type="text" class="form-control" th:field="*{name}"/>
         </div>
         <div class="form-group">
-            <label for="country">Country:</label>
+            <label for="country">Price:</label>
             <input id="country" type="number" step="0.01" class="form-control" th:field="*{price}"/>
         </div>
         <input type="submit" class="btn btn-succes" value="Submit"/>
@@ -34,6 +31,7 @@
             <th style="width: 50px">Id</th>
             <th>Name</th>
             <th>Price</th>
+            <th></th>
         </tr>
         </thead>
         <tr th:each="product : ${products}">
@@ -41,7 +39,10 @@
             <td th:text="${product.name}">Doe</td>
             <td th:text="${product.price}">12</td>
             <td style="width: 50px">
-                <a th:href="@{'/delete_product/' + ${product.id}}" class="btn btn-danger">Delete</a>
+                <a th:href="@{'/products/' + ${product.id} + '/delete'}"
+                   class="btn btn-danger" onclick="confirm('Are you sure?')">
+                    Delete
+                </a>
             </td>
         </tr>
     </table>

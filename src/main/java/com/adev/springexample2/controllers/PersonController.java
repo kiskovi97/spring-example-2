@@ -17,30 +17,27 @@ public class PersonController {
         this.personService = personService;
     }
 
-    @GetMapping({"/person","","/"})
-    public String showPersonPage(Model model) {
+    @GetMapping({"/persons","","/"})
+    public String showPersons(Model model) {
         model.addAttribute("persons", personService.findAllPerson());
         model.addAttribute("person", new Person());
         return "PersonPage";
     }
 
-
-    @PostMapping("/person_add")
-    public String addPerson(Model model, @ModelAttribute Person person) {
+    @PostMapping("/persons")
+    public String addPerson(@ModelAttribute Person person) {
         personService.addPerson(person);
-        return "redirect:/person";
+        return "redirect:/persons";
     }
 
-    @RequestMapping(value = "/delete_person/{stringID}")
-    public String handleDeletPerson(Model model, @PathVariable String stringID) {
-        long longID = Long.parseLong(stringID);
-        personService.deletePerson(longID);
-        return "redirect:/person";
+    @RequestMapping(value = "/persons/{id}/delete")
+    public String deletePerson(@PathVariable String id) {
+        personService.deletePerson(Long.parseLong(id));
+        return "redirect:/persons";
     }
 
-
-    @RequestMapping("/personbyID/{id}")
-    public String showPersonbyID(Model model, @PathVariable Long id) {
+    @RequestMapping("/persons/{id}")
+    public String showPersonById(Model model, @PathVariable Long id) {
         model.addAttribute("persons", personService.getPersonByID(id));
         return "PersonPage";
     }

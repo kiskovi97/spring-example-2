@@ -24,9 +24,8 @@ public class DataInitializator implements CommandLineRunner {
         this.productOrderRepository = productOrderRepository;
     }
 
-
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         System.out.println("Loading Data");
 
         Person p1 = new Person();

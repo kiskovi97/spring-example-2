@@ -37,7 +37,8 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void deleteProduct(Long id) {
         List<ProductOrder> productOrder = productOrderRepository.findAllByProductID(id);
-        if (productOrder.isEmpty())
+        if (productOrder.isEmpty()) {
             productRepository.deleteById(id);
+        }
     }
 }
